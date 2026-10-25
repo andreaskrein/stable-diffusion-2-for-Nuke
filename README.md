@@ -7,9 +7,9 @@
 
 ### Installation
 1. Place the content of this repo into a folder in your local Cattery directory,   
-   for example `~/.nuke/Cattery/stable-diffusion-2-for-Nuke`
+   for example `~/.nuke/Cattery/stable-diffusion-2-for-Nuke`.
 
-3. Models not included. Get them [here](https://huggingface.co/andreaskrein/stable-diffusion-2-inpainting/resolve/main/stable-diffusion-2-inpainting.cat) and [here](https://huggingface.co/andreaskrein/open-clip-vit-h/resolve/main/open-clip-vit-h.cat), and put them inside this folder as well
+3. Models not included. Get them [here](https://huggingface.co/andreaskrein/stable-diffusion-2-inpainting/resolve/main/stable-diffusion-2-inpainting.cat) and [here](https://huggingface.co/andreaskrein/open-clip-vit-h/resolve/main/open-clip-vit-h.cat), and put them inside this folder as well.
 
 5. in Nuke, update the Cattery (**Cattery > Update**)
    
