@@ -18,4 +18,5 @@
 
   
 > [!NOTE]
-> In the current experimental implementation, copied Gizmos lose their encoded text tokens. If this happens, simply press the Encode button again to re-encode them.
+> In the current experimental implementation, copied Gizmos lose their encoded text tokens.   
+> If this happens, simply press the Encode button again to re-encode them.
