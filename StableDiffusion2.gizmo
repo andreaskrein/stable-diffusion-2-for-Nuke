@@ -12,8 +12,8 @@ Gizmo {
  seed 0
  addUserKnob {3 steps l Steps}
  steps 24
- addUserKnob {3 strength l Strength}
- strength 1
+ addUserKnob {7 strength l Strength}
+ strength 1.00
  addUserKnob {7 cfg l Guidance R 1 10}
  cfg 7.5
  addUserKnob {26 ""}
