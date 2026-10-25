@@ -3,3 +3,4 @@
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.7.1-EE4C2C?style=flat&logo=pytorch&logoColor=white)
 
 # stable-diffusion-2-for-Nuke
+In the current implementation, copied Gizmos loose their encoded text tokens. If this happens, simply press the Encode button again to re-encode them.
