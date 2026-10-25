@@ -4,6 +4,9 @@
 
 # stable-diffusion-2-for-Nuke
 1. Place the content of this repo into a folder in your local Cattery directory.   
-2. Models not included. Get them [here](https://huggingface.co/andreaskrein/stable-diffusion-2-inpainting/resolve/main/stable-diffusion-2-inpainting.cat) and [here](https://huggingface.co/andreaskrein/open-clip-vit-h/resolve/main/open-clip-vit-h.cat).   
+2. Models not included. Get them [here](https://huggingface.co/andreaskrein/stable-diffusion-2-inpainting/resolve/main/stable-diffusion-2-inpainting.cat) and [here](https://huggingface.co/andreaskrein/open-clip-vit-h/resolve/main/open-clip-vit-h.cat).
+  
 
-In the current experimental implementation, copied Gizmos lose their encoded text tokens. If this happens, simply press the Encode button again to re-encode them.
+  
+In the current experimental implementation, copied Gizmos lose their encoded text tokens.   
+If this happens, simply press the Encode button again to re-encode them.
