@@ -1,0 +1,13 @@
+{
+    "minimum_nuke_version_required": 17.0,
+    "version": 1,
+    "category": "Generative",
+    "description": "Stable Diffusion 2 inpainting - https://github.com/andreaskrein/stable-diffusion-2-for-Nuke",
+    "cats": [
+        {
+            "filepath": "StableDiffusion2.gizmo",
+            "name": "Stable Diffusion 2",
+            "icon": "generative.png"
+        }
+    ]
+}

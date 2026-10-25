@@ -1,0 +1,249 @@
+#! /Applications/Nuke17.1v2/Nuke17.1v2.app/Contents/MacOS/libnuke-17.1.2.dylib -nx
+version 17.0 v1
+Gizmo {
+ inputs 2
+ addUserKnob {20 _1 l "Image Edit"}
+ addUserKnob {26 Stable_Diffusion_2 l "" t https://github.com/andreaskrein/stable-diffusion-2-for-Nuke +STARTLINE T "<b>Stable Diffusion 2</b> \n inpainting"}
+ addUserKnob {26 ""}
+ addUserKnob {6 useGPU l "Use GPU if available" +STARTLINE}
+ useGPU true
+ addUserKnob {26 ""}
+ addUserKnob {3 seed l Seed}
+ seed 0
+ addUserKnob {3 steps l Steps}
+ steps 24
+ addUserKnob {3 strength l Strength}
+ strength 1
+ addUserKnob {7 cfg l Guidance R 1 10}
+ cfg 7.5
+ addUserKnob {26 ""}
+ addUserKnob {41 posPrompt l "Positive prompt" t "After editing, click Encode prompt to update the token channels" T PositivePrompt.prompt}
+ addUserKnob {41 encode l "Encode prompt" T PositivePrompt.encode}
+ addUserKnob {41 negPrompt l "Negative prompt" t "After editing, click Encode prompt to update the token channels" T NegativePrompt.prompt}
+ addUserKnob {41 encode_1 l "Encode prompt" T NegativePrompt.encode}
+}
+ Group {
+  inputs 0
+  name NegativePrompt
+  knobChanged "if nuke.thisKnob().name() == 'prompt':\n    nuke.thisNode()\['status'].setValue('Prompt changed — click Encode prompt')"
+  xpos 315
+  ypos 159
+  addUserKnob {20 prompt_tab l "SD Prompt"}
+  addUserKnob {43 prompt l Prompt}
+  prompt "error, cropped, bad quality, low quality, duplicate, bad proportions, incomplete, deformed, unrealistic, unfinished\n"
+  addUserKnob {7 id_lut l "Token IDs" +HIDDEN}
+  id_lut {{curve 49406 12097 267 31139 267 2103 3027 267 1042 3027 267 28992 671 267 2103 39391 267 34040 267 561 6528 267 569 16157 267 26526 49407 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}}
+  addUserKnob {43 encoded_prompt l "Encoded prompt" +DISABLED}
+  encoded_prompt "error, cropped, bad quality, low quality, duplicate, bad proportions, incomplete, deformed, unrealistic, unfinished\n"
+  addUserKnob {26 status l "" +STARTLINE T "Prompt changed — click Encode prompt"}
+  addUserKnob {22 encode l "Encode prompt" -STARTLINE T "import  tokenizerSD2i\ntokenizerSD2i.update_group(nuke.thisNode())"}
+ }
+  Constant {
+   inputs 0
+   format "512 512 0 0 512 512 1 SDTokenCarrier512"
+   name Carrier
+   xpos -40
+   ypos 15
+   postage_stamp false
+  }
+  Expression {
+   channel0 {rgba.red -rgba.green -rgba.blue none}
+   expr0 "x+512*(511-y)<77 ? parent.id_lut(x+512*(511-y)) : 0"
+   name TokenIDs
+   xpos -40
+   ypos 39
+  }
+  Output {
+   name Output1
+   xpos -40
+   ypos 63
+  }
+ end_group
+ Inference {
+  useGPUIfAvailable false
+  modelFile "\[lsearch -inline \[plugins -all open-clip-vit-h.cat] *.cat]"
+  serialiseKnob {}
+  name NegativeEncoder
+  xpos 315
+  ypos 397
+ }
+ Group {
+  inputs 0
+  name PositivePrompt
+  knobChanged "if nuke.thisKnob().name() == 'prompt':\n    nuke.thisNode()\['status'].setValue('Prompt changed — click Encode prompt')"
+  xpos 176
+  ypos 157
+  addUserKnob {20 prompt_tab l "SD Prompt"}
+  addUserKnob {43 prompt l "Positive Prompt"}
+  prompt ""
+  addUserKnob {7 id_lut l "Token IDs" +HIDDEN}
+  id_lut {{curve 49406 11124 1449 967 11909 6325 267 18768 21026 21268 537 5591 4023 14922 2528 637 5620 537 40000 6195 267 3797 24457 3674 951 267 16536 860 604 1358 267 16157 31456 967 22046 530 3288 3575 267 8626 628 934 537 48036 267 3117 11909 4643 267 34272 11357 49407 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0}}
+  addUserKnob {43 encoded_prompt l "Encoded prompt" +DISABLED}
+  encoded_prompt ""
+  addUserKnob {26 status l "" +STARTLINE T "Prompt changed — click Encode prompt"}
+  addUserKnob {22 encode l "Encode prompt" -STARTLINE T "import  tokenizerSD2i\ntokenizerSD2i.update_group(nuke.thisNode())"}
+ }
+  Constant {
+   inputs 0
+   format "512 512 0 0 512 512 1 SDTokenCarrier512"
+   name Carrier
+   xpos -40
+   ypos 15
+   postage_stamp false
+  }
+  Expression {
+   channel0 {rgba.red -rgba.green -rgba.blue none}
+   expr0 "x+512*(511-y)<77 ? parent.id_lut(x+512*(511-y)) : 0"
+   name TokenIDs
+   xpos -40
+   ypos 39
+  }
+  Output {
+   name Output1
+   xpos -40
+   ypos 63
+  }
+ end_group
+ Inference {
+  useGPUIfAvailable false
+  modelFile "\[lsearch -inline \[plugins -all open-clip-vit-h.cat] *.cat]"
+  serialiseKnob {}
+  name PositiveEncoder
+  xpos 176
+  ypos 350
+ }
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  format "512 512 0 0 512 512 1 square_512"
+  name white
+  xpos -150
+  ypos 242
+  postage_stamp false
+ }
+ Input {
+  inputs 0
+  name Mask
+  xpos -276
+  ypos 241
+  number 1
+ }
+ Crop {
+  box {0 0 512 512}
+  reformat true
+  crop false
+  name Crop2
+  xpos -276
+  ypos 289
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1]?0:1"}}
+  name Switch2
+  xpos -150
+  ypos 289
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "512 512 0 0 512 512 1 square_512"
+  name black
+  xpos -150
+  ypos 198
+  postage_stamp false
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 10
+  ypos 126
+ }
+ Crop {
+  box {0 0 512 512}
+  reformat true
+  crop false
+  name Crop1
+  xpos 10
+  ypos 174
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input0]?0:1"}}
+  name Switch1
+  xpos 10
+  ypos 198
+ }
+ Colorspace {
+  colorspace_out sRGB
+  name Colorspace1
+  xpos 10
+  ypos 261
+ }
+add_layer {matte matte.red}
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 matte.red
+  name MaskInput
+  xpos 10
+  ypos 285
+ }
+add_layer {positive positive.red}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 positive.red
+  name Positive
+  xpos 10
+  ypos 346
+ }
+add_layer {negative negative.red}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 negative.red
+  name Negative
+  xpos 10
+  ypos 393
+ }
+ Expression {
+  channel0 positive
+  expr0 "x>=0 && x<512 && y>=0 && y<512 ? positive.red : 0"
+  channel1 negative
+  expr1 "x>=0 && x<512 && y>=0 && y<512 ? negative.red : 0"
+  name Expression
+  label "512 RGB + white edit mask + unscaled embeddings"
+  xpos 10
+  ypos 425
+ }
+ Inference {
+  useGPUIfAvailable {{parent.useGPU}}
+  modelFile "\[lsearch -inline \[plugins -all stable-diffusion-2-inpainting.cat] *.cat]"
+  serialiseKnob {seed:{parent.seed};steps:{parent.steps};strength:{parent.strength};guidance:{parent.cfg};}
+  name StableDiffusion2
+  xpos 10
+  ypos 457
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name Colorspace2
+  xpos 10
+  ypos 508
+ }
+set N9686ad00 [stack 0]
+ Output {
+  name Output
+  xpos 10
+  ypos 583
+ }
+push $N9686ad00
+ Viewer {
+  frame_range 1-100
+  render_settings_schema false
+  monitorOutNDISenderName "NukeX - working_script - Viewer1"
+  name Viewer1
+  xpos 10
+  ypos 532
+ }
+end_group
