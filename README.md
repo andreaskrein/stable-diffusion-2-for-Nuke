@@ -15,7 +15,10 @@
    
    ![Cattery menu](https://raw.githubusercontent.com/andreaskrein/andreaskrein.github.io/master/assets/Cattery.png)
  
+### Use
+Connect an input image and a mask to the node. Enter your image editing prompt, and press the button to encode it.   
 
+  
   
 > [!NOTE]
 > In the current experimental implementation, copied Gizmos lose their encoded text tokens.   
